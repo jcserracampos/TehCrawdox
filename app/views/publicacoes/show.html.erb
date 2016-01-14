@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Titulo:</strong>
+  <%= @publicacao.titulo %>
+</p>
+
+<p>
+  <strong>Descricacao:</strong>
+  <%= @publicacao.descricacao %>
+</p>
+
+<p>
+  <strong>Codigo:</strong>
+  <%= @publicacao.codigo %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @publicacao.url %>
+</p>
+
+<p>
+  <strong>Link imagem:</strong>
+  <%= @publicacao.link_imagem %>
+</p>
+
+<p>
+  <strong>Caminho imagem:</strong>
+  <%= @publicacao.caminho_imagem %>
+</p>
+
+<p>
+  <strong>Situacao:</strong>
+  <%= @publicacao.situacao %>
+</p>
+
+<p>
+  <strong>Exportado:</strong>
+  <%= @publicacao.exportado %>
+</p>
+
+<p>
+  <strong>Categoria:</strong>
+  <%= @publicacao.categoria %>
+</p>
+
+<%= link_to 'Edit', edit_publicacao_path(@publicacao) %> |
+<%= link_to 'Back', publicacoes_path %>

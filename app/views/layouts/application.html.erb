@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="tehparadox">
+<head>
+  <title>Tehparadox</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <script>
+    var Publicacoes = <%= @publicacoes.to_json.html_safe %>;
+    </script>
+</head>
+<body >
+
+<%= yield %>
+
+</body>
+</html>

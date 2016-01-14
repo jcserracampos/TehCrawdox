@@ -1,0 +1,116 @@
+<head>
+  <style>
+    h1 {
+      text-align: center;
+    }
+      h5 {
+        text-align: center
+      }
+      img {
+        alignment: center;
+      }
+  </style>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body ng-app="tehparadox">
+<div ng-controller="ControllerPublicacoes">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand" href="#">Teh Crawdox</a></div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li ><a href="#">Dashboard</a></li>
+          <li class="active"><a href="#about">Publicações</a></li>
+          <li><a href="#contact">Categorias</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="starter-template">
+    <p id="notice"><%= notice %></p>
+
+</br>
+    <h1>Publicações</h1>
+    <!--<table>-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>Titulo</th>-->
+    <!--<th>Descricacao</th>-->
+    <!--<th>Codigo</th>-->
+    <!--<th>Url</th>-->
+    <!--<th>Link imagem</th>-->
+    <!--<th>Caminho imagem</th>-->
+    <!--<th>Situacao</th>-->
+    <!--<th>Exportado</th>-->
+    <!--<th>Categoria</th>-->
+    <!--<th colspan="3"></th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+
+    <!--<tbody>-->
+    <!--<%# @publicacoes.each do |publicacao| %>-->
+    <!--<tr>-->
+    <!--<td><%#= publicacao.titulo %></td>-->
+    <!--<td><%#= publicacao.descricao %></td>-->
+    <!--<td><%#= publicacao.codigo %></td>-->
+    <!--<td><%#= publicacao.url %></td>-->
+    <!--<td><%#= publicacao.link_imagem %></td>-->
+    <!--<td><%#= publicacao.caminho_imagem %></td>-->
+    <!--<td><%#= publicacao.situacao %></td>-->
+    <!--<td><%#= publicacao.exportado %></td>-->
+    <!--<td><%#= publicacao.categoria %></td>-->
+    <!--<td><%#= link_to 'Show', publicacao %></td>-->
+    <!--<td><%#= link_to 'Edit', edit_publicacao_path(publicacao) %></td>-->
+    <!--<td><%#= link_to 'Destroy', publicacao, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
+    <!--</tr>-->
+    <!--<%# end %>-->
+    <!--</tbody>-->
+    <!--</table>-->
+
+    <!--<table>-->
+    <!--<thead>-->
+    <!--<th>Título</th>-->
+    <!--<th>Descrição</th>-->
+    <!--<th>Links</th>-->
+    <!--</thead>-->
+    <!--<tbody ng-repeat="p in publicacoes">-->
+    <!--<tr>-->
+    <!--<td>{{p.titulo}}</td>-->
+    <!--<td>{{p.descricao}}</td>-->
+    <!--<td>{{p.links}}</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+
+    <div class="row">
+      <div class="col-md-3" ng-repeat="p in publicacoes track by p.id">
+        <h5><b>{{p.titulo}}</b></h5> <br>
+        <img data-holder-rendered="true" ng-src="{{p.links[0]}}" style="width: 200px; height: 200px;" data-src="holder.js/200x200" class="img-thumbnail" alt="200x200">
+        </br>
+        <li><b>Descrição:</b> {{p.descricao}}</li>
+        <li><b>Hosts</b></li>
+        <li ng-repeat="h in p.hosts track by $index">{{h}}</li>
+
+        <%= link_to "Confirmar", confirmar_publicacao_path(2) %>
+
+      </div>
+    </div>
+    </br>
+    <button class="btn btn-xs btn-default"><%= link_to 'Adicionar publicação manualemente', new_publicacao_path %></button>
+  </div>
+</div>
+  </div>
+</body>
