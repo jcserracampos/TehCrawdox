@@ -1,12 +1,9 @@
 angular.module('tehparadox', [])
     .controller('ControllerPrincipal', function ($scope, $route, $routeParams, $location) {
 
-        $scope.teste = "Olá, Mundo!";
-
-        $scope.$route = $route;
-        $scope.$location = $location;
-        $scope.$routeParams = $routeParams;
-
+        //$scope.$route = $route;
+        //$scope.$location = $location;
+        //$scope.$routeParams = $routeParams;
 
     })
     .controller('ControllerPublicacoes', function ($scope) {
@@ -36,15 +33,11 @@ angular.module('tehparadox', [])
             for (w = 0; w < $scope.publicacoes[i].links.length; w++) {
                 if ($scope.publicacoes[i].hosts.indexOf($scope.publicacoes[i].links[w].match(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+[\w.,@?^=%&amp;:\/~+#-]/g)) === -1) {
                     if ($scope.publicacoes[i].links[w].match('http://tehparadox.com/')) {
-
                     } else {
                         $scope.publicacoes[i].hosts.push($scope.publicacoes[i].links[w].match(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+[\w.,@?^=%&amp;:\/~+#-]/g));
                     }
                 }
             }
-
-
-
         }
 
         // Gerar o dlc por ajax ou javascript

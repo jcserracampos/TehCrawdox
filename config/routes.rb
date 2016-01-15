@@ -5,8 +5,12 @@ Rails.application.routes.draw do
     member do
       post 'confirmar'
     end
+
+    get 'confirmar', on: :collection
   end
   resources :categorias
+
+  # get 'publicacao/confirmar' => 'publicacoes#confirmar'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
