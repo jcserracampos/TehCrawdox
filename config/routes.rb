@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
 
     get 'confirmar', on: :collection
+
+    get 'publicacoes/:id/confirmar' => 'publicacao#confirmar', as: :confirmar
   end
   resources :categorias
 

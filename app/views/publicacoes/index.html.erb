@@ -12,6 +12,8 @@
   </style>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% id = 0 %>
+  var urlUpdate = <%= confirmar_publicacao_path(id) %>;
 </head>
 
 <body ng-app="tehparadox">
@@ -52,7 +54,7 @@
         </br>
         <li><b>Descrição:</b> {{p.descricao}}</li>
         <li><b>Hosts</b></li>
-        <li ng-repeat="h in p.hosts track by $index">{{h}}</li>
+        <li ng-click="gerarDlc(p, h)" ng-repeat="h in p.hosts track by $index">{{h}}</li>
 
         <%= link_to "Confirmar", confirmar_publicacao_path(2) %>
 

@@ -17,7 +17,7 @@ namespace :importacao do
       links = descricao_publicacao.css('.alt2').to_s # Traz o que tem dentro de um campo CODE (Geralmente os links)
 
 
-        # Necessário varrer a variável para separar os links por host
+     # Necessário varrer a variável para separar os links por host
       publicacao_links = links.match(publicacao.host)
 
 
