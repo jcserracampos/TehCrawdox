@@ -1,5 +1,5 @@
 class PublicacoesController < ApplicationController
-  before_action :set_publicacao, only: [:show, :edit, :update, :destroy]
+  before_action :set_publicacao, only: [:show, :edit, :update, :destroy, :confirmar]
 
   # GET /publicacoes
   # GET /publicacoes.json
@@ -67,16 +67,12 @@ class PublicacoesController < ApplicationController
   end
 
   def confirmar
-    @publicacao.situacao = Publicacao::confirmada
-
-    abort @publicacao.inspect
-
-    @publicacao.host = 'aaaa'
+    @publicacao = Publicacao.find(params[:id])
+    @publicacao.situacao = Publicacao::CONFIRMADA
+    @publicacao.host = params[:host]
     @publicacao.save
 
-
-
-    redirect_to action: "analisar"
+    redirect_to action: "index"
   end
 
   def rejeitar
@@ -102,6 +98,6 @@ class PublicacoesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def publicacao_params
-      params.require(:publicacao).permit(:titulo, :descricao, :codigo, :url, :link_imagem, :caminho_imagem, :situacao, :exportado, :categoria_id)
+      params.require(:publicacao).permit(:titulo, :descricao, :codigo, :url, :link_imagem, :caminho_imagem, :situacao, :exportado, :categoria_id, :host)
     end
 end

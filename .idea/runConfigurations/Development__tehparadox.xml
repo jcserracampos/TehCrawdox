@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Development: tehparadox" type="RailsRunConfigurationType" factoryName="Rails">
+  <configuration default="false" name="Development: tehparadox" type="RailsRunConfigurationType" factoryName="Rails" show_console_on_std_out="true" show_console_on_std_err="true">
     <predefined_log_file id="RUBY_RAILS_SERVER" enabled="true" />
     <module name="tehparadox" />
     <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
     <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$MODULE_DIR$" />
     <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="true" />
-    <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="RVM: ruby-2.3.0 [tehparadox]" />
+    <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="RVM: ruby-2.3.0 [tehcrawdox]" />
     <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
     <envs />
     <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />

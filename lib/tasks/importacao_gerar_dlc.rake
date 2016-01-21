@@ -24,7 +24,7 @@ namespace :importacao do
       # Criando o pacote
       pacote = DLC::Package.new # Iniciando o pacote
       pacote.name = publicacao.titulo # Definindo o nome do pacote como o nome da publicacao
-      pacote.add_link(links) # Adicionando os links ao pacote
+      pacote.add_link(publicacao_links) # Adicionando os links ao pacote
 
       # Gravando o pacote
       open("#{pacote.name}.dlc", "w") do |f|

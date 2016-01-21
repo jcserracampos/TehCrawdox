@@ -2,18 +2,12 @@ Rails.application.routes.draw do
   get 'welcome/index'
 
   resources :publicacoes do
-    member do
-      post 'confirmar'
+    collection do
+      get '/:id/confirmar' => 'publicacoes#confirmar', as: :confirmar, :action => :confirmar
     end
-
-    get 'confirmar', on: :collection
-
-    get 'publicacoes/:id/confirmar' => 'publicacao#confirmar', as: :confirmar
   end
+
   resources :categorias
-
-  # get 'publicacao/confirmar' => 'publicacoes#confirmar'
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -3,17 +3,17 @@
     h1 {
       text-align: center;
     }
-      h5 {
-        text-align: center
-      }
-      img {
-        alignment: center;
-      }
+
+    h5 {
+      text-align: center
+    }
+
+    img {
+      alignment: center;
+    }
   </style>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <% id = 0 %>
-  var urlUpdate = <%= confirmar_publicacao_path(id) %>;
 </head>
 
 <body ng-app="tehparadox">
@@ -32,7 +32,7 @@
         <a class="navbar-brand" href="#">Teh Crawdox</a></div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li ><a href="#">Dashboard</a></li>
+          <li><a href="#">Dashboard</a></li>
           <li class="active"><a href="#about">Publicações</a></li>
           <li><a href="#contact">Categorias</a></li>
         </ul>
@@ -42,27 +42,24 @@
 
   <div class="container">
     <div class="starter-template">
-    <p id="notice"><%= notice %></p>
+      <p id="notice"><%= notice %></p>
 
-</br>
-    <h1>Publicações</h1>
+      </br>
+      <h1>Publicações</h1>
 
-    <div class="row">
-      <div class="col-md-3" ng-repeat="p in publicacoes track by p.id">
-        <h5><b>{{p.titulo}}</b></h5> <br>
-        <img data-holder-rendered="true" ng-src="{{p.links[0]}}" style="width: 200px; height: 200px;" data-src="holder.js/200x200" class="img-thumbnail" alt="200x200">
-        </br>
-        <li><b>Descrição:</b> {{p.descricao}}</li>
-        <li><b>Hosts</b></li>
-        <li ng-click="gerarDlc(p, h)" ng-repeat="h in p.hosts track by $index">{{h}}</li>
-
-        <%= link_to "Confirmar", confirmar_publicacao_path(2) %>
-
+      <div class="row">
+        <div class="col-md-3" ng-repeat="p in publicacoes track by p.id">
+          <h5><b>{{p.titulo}}</b></h5> <br>
+          <img data-holder-rendered="true" ng-src="{{p.links[0]}}" style="width: 200px; height: 200px;" data-src="holder.js/200x200" class="img-thumbnail" alt="200x200">
+          </br>
+          <li><b>Descrição:</b> {{p.descricao}}</li>
+          <li><b>Hosts</b></li>
+          <button ng-click="gerarDlc(p, h)" ng-repeat="h in p.hosts track by $index">{{h}}</button>
+        </div>
       </div>
+      </br>
+      <button class="btn btn-xs btn-default"><%= link_to 'Adicionar publicação manualmente', new_publicacao_path %></button>
     </div>
-    </br>
-    <button class="btn btn-xs btn-default"><%= link_to 'Adicionar publicação manualemente', new_publicacao_path %></button>
   </div>
 </div>
-  </div>
 </body>

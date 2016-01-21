@@ -8,7 +8,7 @@ angular.module('tehparadox', [])
     })
     .controller('ControllerPublicacoes', function ($scope) {
         $scope.publicacoes = Publicacoes;
-        $scope.url = urlUpdate;
+        //$scope.url = urlUpdate;
 
         for (i = 0; i < $scope.publicacoes.length; i++) {
             // Captura de todos os links disponíveis na publicação
@@ -43,16 +43,9 @@ angular.module('tehparadox', [])
 
         // Gerar o dlc por ajax ou javascript
         $scope.gerarDlc = function(publicacao, host) {
-            $.ajax({
-                type: "POST",
-                dataType: 'json',
-                url: urlUpdate,
-                data: {
-                    host: host
-                    //publicacao.status: 0;
-                    //publicacao.host: host;
-                }
-            })
+            $scope.url = window.location.host;
+            $scope.url = "http://".concat($scope.url).concat("/publicacoes/").concat(publicacao.id).concat("/confirmar?host=").concat(host);
+            window.location.href = $scope.url;
         };
 
 
