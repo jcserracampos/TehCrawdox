@@ -72,11 +72,17 @@ class PublicacoesController < ApplicationController
     @publicacao.host = params[:host]
     @publicacao.save
 
-    redirect_to action: "index"
+    # redirect_to action: "index"
+  end
+
+  def confirmar_sem_host
+    @publicacao.situacao = Publicacao::Confirmada
+
+    # redirect_to action: "index"
   end
 
   def rejeitar
-    @publicacao.situacao = Publicacao::rejeitada
+    @publicacao.situacao = Publicacao::REJEITADA
     @publicacao.save
 
     redirect_to action: "analisar"
@@ -84,7 +90,7 @@ class PublicacoesController < ApplicationController
   end
 
   def ignorar
-    @publicacao.situacao = Publicacao::ignorada
+    @publicacao.situacao = Publicacao::IGNORADA
     @publicacao.save
 
     redirect_to action: "analisar"

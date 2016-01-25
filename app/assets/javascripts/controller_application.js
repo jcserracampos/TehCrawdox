@@ -46,6 +46,8 @@ angular.module('tehparadox', [])
             $scope.url = window.location.host;
             $scope.url = "http://".concat($scope.url).concat("/publicacoes/").concat(publicacao.id).concat("/confirmar?host=").concat(host);
             window.location.href = $scope.url;
+
+            $scope.publicacoes(publicacao.id).hide = true;
         };
 
 

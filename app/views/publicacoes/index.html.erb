@@ -48,13 +48,17 @@
       <h1>Publicações</h1>
 
       <div class="row">
-        <div class="col-md-3" ng-repeat="p in publicacoes track by p.id">
+        <div class=".col-xs-6" ng-repeat="p in publicacoes track by p.id" ng-hide="{{p.hide}}">
           <h5><b>{{p.titulo}}</b></h5> <br>
           <img data-holder-rendered="true" ng-src="{{p.links[0]}}" style="width: 200px; height: 200px;" data-src="holder.js/200x200" class="img-thumbnail" alt="200x200">
           </br>
           <li><b>Descrição:</b> {{p.descricao}}</li>
+          <button class="btn .btn-primary">Confirmar</button>
+          <button class="btn .btn-warning">Ignorar</button>
+          <button class="btn .btn-danger">Rejeitar</button>
           <li><b>Hosts</b></li>
-          <button ng-click="gerarDlc(p, h)" ng-repeat="h in p.hosts track by $index">{{h}}</button>
+
+          <button class="btn .btn-link" ng-click="gerarDlc(p, h)" ng-repeat="h in p.hosts track by $index">{{h}}</button>
         </div>
       </div>
       </br>
