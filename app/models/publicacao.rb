@@ -14,8 +14,4 @@ class Publicacao < ActiveRecord::Base
       situacao == self.class.const_get(state.upcase)
     end
   end
-
-
-  # enum status: {criada: 0, nova: 1, confirmada: 2, ignorada: 3, rejeitada: 4, gerada: 5, baixada: 6}
-
 end

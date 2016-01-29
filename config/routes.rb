@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   resources :publicacoes do
     collection do
       get '/:id/confirmar' => 'publicacoes#confirmar', as: :confirmar, :action => :confirmar
+      get '/:id/confirmar_sem_host' => 'publicacoes#confirmar_sem_host', as: :confirmar_sem_host, action: :confirmar_sem_host
+      get '/:id/ignorar' => 'publicacoes#ignorar', as: :ignorar, :action => :ignorar
+      get '/:id/rejeitar' => 'publicacoes#rejeitar', as: :rejeitar, :action => :rejeitar
+
+
     end
   end
 

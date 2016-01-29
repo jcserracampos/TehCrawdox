@@ -4,7 +4,7 @@ class PublicacoesController < ApplicationController
   # GET /publicacoes
   # GET /publicacoes.json
   def index
-    @publicacoes = Publicacao.all
+    @publicacoes = Publicacao.where('situacao = 1')
   end
 
   # GET /publicacoes/1
@@ -72,28 +72,33 @@ class PublicacoesController < ApplicationController
     @publicacao.host = params[:host]
     @publicacao.save
 
-    # redirect_to action: "index"
+    redirect_to action: "index"
   end
 
   def confirmar_sem_host
-    @publicacao.situacao = Publicacao::Confirmada
+    @publicacao = Publicacao.find(params[:id])
+    @publicacao.situacao = Publicacao::CONFIRMADA
+    @publicacao.save
 
-    # redirect_to action: "index"
+
+    redirect_to action: "index"
   end
 
   def rejeitar
+    @publicacao = Publicacao.find(params[:id])
     @publicacao.situacao = Publicacao::REJEITADA
     @publicacao.save
 
-    redirect_to action: "analisar"
+    redirect_to action: "index"
 
   end
 
   def ignorar
+    @publicacao = Publicacao.find(params[:id])
     @publicacao.situacao = Publicacao::IGNORADA
     @publicacao.save
 
-    redirect_to action: "analisar"
+    redirect_to action: "index"
   end
 
   private

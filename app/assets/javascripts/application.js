@@ -14,6 +14,7 @@
 //= require angular/angular
 //= require angular-rails-templates
 //= require angular-ui-router
+//= require ng-infinite-scroll
 //= require jquery
 //= require jquery_ujs
 // require turbolinks
