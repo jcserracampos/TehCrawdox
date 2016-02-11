@@ -1,7 +1,0 @@
-development:
-  adapter: postgresql
-  encoding: unicode
-  database: tehparadox_desenvolvimento
-  pool: 5
-  username: tehparadox
-  password:
