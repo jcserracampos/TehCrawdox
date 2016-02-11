@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Links:</strong>
+  <%= @host.links %>
+</p>
+
+<p>
+  <strong>Imagem padrao:</strong>
+  <%= @host.imagem_padrao %>
+</p>
+
+<%= link_to 'Edit', edit_host_path(@host) %> |
+<%= link_to 'Back', hosts_path %>
