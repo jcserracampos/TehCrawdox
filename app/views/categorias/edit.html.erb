@@ -1,6 +1,11 @@
-<h1>Editing Categoria</h1>
+<%= render 'layouts/navbar' %>
 
-<%= render 'form' %>
+<div class="container-fluid">
+  <h1>Editando Categoria</h1>
 
-<%= link_to 'Show', @categoria %> |
-<%= link_to 'Back', categorias_path %>
+  <%= render 'form' %>
+  <div class="actions">
+    <%= link_to 'Mostrar', @categoria, {class: 'btn btn-primary'} %>
+    <%= link_to 'Cancelar', categorias_path, {class: 'btn btn-danger'} %>
+  </div>
+</div>

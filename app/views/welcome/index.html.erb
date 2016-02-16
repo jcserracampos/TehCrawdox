@@ -1,56 +1,61 @@
-<div class="container" ng-controller="ControllerPublicacoes">
-  <body>
+<body ng-controller="ControllerPublicacoes">
 
-  <%= render "layouts/navbar" %>
+<%= render "layouts/navbar" %>
 
-  <br><br><br>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="main">
-        <h1 class="page-header">Publicações Recentes</h1>
-        <div class="row placeholders">
+<div class="container-fluid">
+  <div class="row">
+    <div class="main">
+      <h1 >Publicações Recentes</h1>
+      <div class="row placeholders">
 
-        <% @publicacoes.each do |publicacao| %>
-              <div class="col-xs-6 col-sm-3 placeholder">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="img-responsive" alt="Generic placeholder thumbnail" height="200" width="200">
-                <h4><%= publicacao.titulo %></h4>
-                <span class="text-muted"><%= publicacao.descricao.to_s[235...535] %>></span>
-              </div>
+        <% if @publicacoes == [] %>
+            <h3>Nenhuma publicação no Banco de Dados ainda!</h3>
+        <% else %>
+            <% @publicacoes.each do |publicacao| %>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="img-responsive" alt="Generic placeholder thumbnail" height="200" width="200">
+                  <h4><%= publicacao.titulo %></h4>
+                  <span class="text-muted"><%= publicacao.descricao.to_s[235...535] %>></span>
+                </div>
 
-        <% end %>
-        </div>
-
-        <h2 class="sub-header">Status das Categorias</h2>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th>Categoria</th>
-              <th>Nova</th>
-              <th>Confirmadas</th>
-              <th>Ignoradas</th>
-              <th>Rejeitadas</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% @categorias.each do |categoria| %>
-                <tr>
-                  <td><%= categoria.nome %></td>
-                  <td><%= categoria.publicacaos.where('situacao = 0').length %></td>
-                  <td><%= categoria.publicacaos.where('situacao = 1').length %></td>
-                  <td><%= categoria.publicacaos.where('situacao = 2').length %></td>
-                  <td><%= categoria.publicacaos.where('situacao = 3').length %></td>
-                </tr>
             <% end %>
-
-
-            </tbody>
-          </table>
-        </div>
-        </div>
+        <% end %>
       </div>
+
+      <br>
+
+      <h2>Status das Categorias</h2>
+      <% if @categorias == [] %>
+          <h3>Nenhuma categoria cadastrada ainda!</h3>
+      <% else %>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Categoria</th>
+                <th>Novas</th>
+                <th>Confirmadas</th>
+                <th>Ignoradas</th>
+                <th>Rejeitadas</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @categorias.each do |categoria| %>
+                  <tr>
+                    <td><%= categoria.nome %></td>
+                    <td><%= categoria.publicacaos.where('situacao = 0').length %></td>
+                    <td><%= categoria.publicacaos.where('situacao = 1').length %></td>
+                    <td><%= categoria.publicacaos.where('situacao = 2').length %></td>
+                    <td><%= categoria.publicacaos.where('situacao = 3').length %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% end %>
     </div>
-
-  </body>
-
+  </div>
 </div>
+
+</body>
+

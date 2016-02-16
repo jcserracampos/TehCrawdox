@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :nome %><br>
-    <%= f.text_field :nome %>
+    <%= f.text_field :nome, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :descricao %><br>
-    <%= f.text_area :descricao %>
+  <div class="form-group">
+    <%= f.label :descricao, 'Descrição' %><br>
+    <%= f.text_area :descricao, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :ativo %><br>
     <%= f.check_box :ativo %>
   </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
+  <div class="form-group">
+    <%= f.label :url, 'Link da categoria' %><br>
+    <%= f.text_field :url, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :path %><br>
-    <%= f.text_field :path %>
+  <div class="form-group">
+    <%= f.label :path, 'Caminho padrão para salvar' %><br>
+    <%= f.text_field :path, class: 'form-control' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Cadastrar', class: 'btn btn-primary' %>
   </div>
 <% end %>

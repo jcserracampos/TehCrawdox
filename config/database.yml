@@ -1,0 +1,16 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: tehparadox_desenvolvimento
+  host: localhost
+  pool: 5
+  username: tehparadox
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: tehparadox_teste
+  pool: 5
+  username: tehparadox
+  password:

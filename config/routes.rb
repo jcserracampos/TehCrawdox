@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :urls
   resources :hosts
+
+  resources :relatorios
+
   get 'welcome/index'
 
   resources :publicacoes do

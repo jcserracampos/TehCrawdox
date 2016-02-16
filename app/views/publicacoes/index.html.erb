@@ -1,52 +1,30 @@
-<head>
-  <style>
-    h1 {
-      text-align: center;
-    }
-
-    h5 {
-      text-align: center
-    }
-
-    img {
-      alignment: center;
-    }
-  </style>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-
 <body ng-app="tehparadox">
 <div ng-controller="ControllerPublicacoes">
+  <div class="container-fluid">
 
-  <%= render "layouts/navbar" %>
+    <%= render "layouts/navbar" %>
 
-  <div class="container">
-    <div class="starter-template">
-      <p id="notice"><%= notice %></p>
+    <p id="notice"><%= notice %></p>
 
-      </br>
-      <h1>Publicações</h1>
+    <h1>Publicações</h1>
 
-      <!--<div infinite-scroll="myPagingFunction()" infinite-scroll-distance="3">-->
-        <div>
-        <div class="col-md-6" ng-repeat="p in publicacoes track by p.id">
-          <h5><b>{{p.titulo}}</b></h5> <br>
-          <img data-holder-rendered="true" ng-src="{{p.links[0]}}" style="width: 200px; height: 200px; alignment: center" data-src="holder.js/200x200" class="img-thumbnail" alt="200x200">
-          </br>
-          <li><b>Descrição:</b> {{p.descricao}}</li>
-          <button class="btn .btn-primary" ng-click="confirmarSemHost(p)">Confirmar</button>
-          <button class="btn .btn-warning" ng-click="ignorar(p)">Ignorar</button>
-          <button class="btn .btn-danger" ng-click="rejeitar(p)">Rejeitar</button>
-          <li><b>Hosts</b></li>
+    <div>
+      <div class="col-md-6" ng-repeat="p in publicacoes track by p.id">
+        <h5><b>{{p.titulo}}</b></h5> <br>
+        <img data-holder-rendered="true" ng-src="{{p.links[0]}}" style="width: 200px; height: 200px; alignment: center" data-src="holder.js/200x200" class="img-thumbnail" alt="200x200">
+        </br>
+        <li><b>Descrição:</b> {{p.descricao}}</li>
+        <button class="btn .btn-primary" ng-click="confirmarSemHost(p)">Confirmar</button>
+        <button class="btn .btn-warning" ng-click="ignorar(p)">Ignorar</button>
+        <button class="btn .btn-danger" ng-click="rejeitar(p)">Rejeitar</button>
+        <li><b>Hosts</b></li>
 
-          <div class="row">
-            <button  class="btn .btn-link" ng-repeat="h in p.hosts track by $index" ng-click="gerarDlc(p, h)">{{h}}</button>
-          </div>
+        <div class="row">
+          <button class="btn .btn-link" ng-repeat="h in p.hosts track by $index" ng-click="gerarDlc(p, h)">{{h}}</button>
         </div>
       </div>
-      </br>
     </div>
+    </br>
   </div>
 </div>
 </body>

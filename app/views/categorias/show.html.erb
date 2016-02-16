@@ -1,29 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
 
-<p>
-  <strong>Nome:</strong>
-  <%= @categoria.nome %>
-</p>
+  <%= render 'layouts/navbar' %>
 
-<p>
-  <strong>Descricao:</strong>
-  <%= @categoria.descricao %>
-</p>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Ativo:</strong>
-  <%= @categoria.ativo %>
-</p>
+  <p>
+    <strong>Nome:</strong>
+    <%= @categoria.nome %>
+  </p>
 
-<p>
-  <strong>Url:</strong>
-  <%= @categoria.url %>
-</p>
+  <p>
+    <strong>Descrição:</strong>
+    <%= @categoria.descricao %>
+  </p>
 
-<p>
-  <strong>Path:</strong>
-  <%= @categoria.path %>
-</p>
+  <p>
+    <strong>Ativo:</strong>
+    <% if @categoria.ativo %>
+      ✅ <!-- É um emoji de ok -->
+    <% else %>
+        ❌ <!-- É um emoji de negativo -->
+    <% end %>
+  </p>
 
-<%= link_to 'Edit', edit_categoria_path(@categoria) %> |
-<%= link_to 'Back', categorias_path %>
+  <p>
+    <strong>Link do fórum:</strong>
+    <%= @categoria.url %>
+  </p>
+
+  <p>
+    <strong>Caminho para salvar:</strong>
+    <%= @categoria.path %>
+  </p>
+
+
+  <div class="actions">
+    <%= link_to 'Editar', edit_categoria_path(@categoria) , {class: 'btn btn-primary'}%>
+    <%= link_to 'Voltar', categorias_path, {class: 'btn btn-danger'} %>
+  </div>
+</div>

@@ -1,5 +1,14 @@
-<h1>New Categoria</h1>
+<%= render "layouts/navbar" %>
 
-<%= render 'form' %>
+<br><br><br>
+<div class="container-fluid">
 
-<%= link_to 'Back', categorias_path %>
+  <h1>Cadastrar Categoria</h1>
+
+  <%= render 'form' %>
+
+  <div class="actions">
+    <%= link_to 'Voltar', categorias_path, class: 'btn btn-danger' %>
+  </div>
+
+</div>
