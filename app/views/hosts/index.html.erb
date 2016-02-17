@@ -1,29 +1,40 @@
-<p id="notice"><%= notice %></p>
+<%= render 'layouts/navbar' %>
+<div class="container-fluid">
+  <p id="notice"><%= notice %></p>
 
-<h1>Listing Hosts</h1>
+  <h1>Listando Hosts</h1>
 
-<table>
-  <thead>
+  <table class="table table-hover">
+    <thead>
     <tr>
       <th>Links</th>
-      <th>Imagem padrao</th>
+      <th>Imagem padrão</th>
+      <th>Ativo</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @hosts.each do |host| %>
-      <tr>
-        <td><%= host.links %></td>
-        <td><%= host.imagem_padrao %></td>
-        <td><%= link_to 'Show', host %></td>
-        <td><%= link_to 'Edit', edit_host_path(host) %></td>
-        <td><%= link_to 'Destroy', host, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><%= host.links %></td>
+          <td><img src="<%= host.imagem_padrao %>" class="img-logo"></td>
+          <td>  <% if host.ativo %>
+                ✅ <!-- É um emoji de ok -->
+            <% else %>
+                ❌ <!-- É um emoji de negativo -->
+            <% end %></td>
+          <td><%= link_to 'Exibir', host %></td>
+          <td><%= link_to 'Editar', edit_host_path(host) %></td>
+          <td><%= link_to 'Excluir', host, method: :delete, data: {confirm: 'Você tem certeza dessa ação? Ela é irreversível!'} %></td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<br>
+  <br>
 
-<%= link_to 'New Host', new_host_path %>
+  <div class="actions">
+    <%= link_to 'Cadastrar Host', new_host_path, {class: 'btn btn-primary'} %>
+  </div>
+</div>

@@ -1,5 +1,12 @@
-<h1>New Host</h1>
+<%= render 'layouts/navbar' %>
 
-<%= render 'form' %>
+<div class="container-fluid">
 
-<%= link_to 'Back', hosts_path %>
+  <h1>Cadastrar Host</h1>
+
+  <%= render 'form' %>
+
+  <div class="actions">
+    <%= link_to 'Voltar', hosts_path, class: 'btn btn-danger' %>
+  </div>
+</div>

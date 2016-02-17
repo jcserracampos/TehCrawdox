@@ -17,7 +17,7 @@
   <p>
     <strong>Ativo:</strong>
     <% if @categoria.ativo %>
-      ✅ <!-- É um emoji de ok -->
+        ✅ <!-- É um emoji de ok -->
     <% else %>
         ❌ <!-- É um emoji de negativo -->
     <% end %>
@@ -35,7 +35,7 @@
 
 
   <div class="actions">
-    <%= link_to 'Editar', edit_categoria_path(@categoria) , {class: 'btn btn-primary'}%>
+    <%= link_to 'Editar', edit_categoria_path(@categoria), {class: 'btn btn-primary'} %>
     <%= link_to 'Voltar', categorias_path, {class: 'btn btn-danger'} %>
   </div>
 </div>

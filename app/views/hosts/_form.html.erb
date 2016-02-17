@@ -11,15 +11,26 @@
     </div>
   <% end %>
 
-  <div class="field">
+    <div class="form-group">
+      <%= f.label :titulo, 'Nome do Host' %>
+      <%= f.text_field :titulo, class: 'form-control' %>
+    </div>
+
+  <div class="form-group">
     <%= f.label :links %><br>
-    <%= f.text_field :links %>
+    <%= f.text_field :links, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :imagem_padrao %><br>
-    <%= f.text_area :imagem_padrao %>
+  <div class="form-group">
+    <%= f.label :imagem_padrao, 'Imagem padrão' %><br>
+    <%= f.text_area :imagem_padrao, class: 'form-control' %>
   </div>
+
+    <div class="form-horizontal">
+      <%= f.label :ativo %>
+      <%= f.check_box :ativo %>
+    </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Cadastrar', class: 'btn btn-primary' %>
   </div>
 <% end %>

@@ -1,14 +1,33 @@
-<p id="notice"><%= notice %></p>
+<%= render 'layouts/navbar' %>
 
-<p>
-  <strong>Links:</strong>
-  <%= @host.links %>
-</p>
+<div class="container-fluid">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Imagem padrao:</strong>
-  <%= @host.imagem_padrao %>
-</p>
+  <p>
+    <strong>Nome:</strong>
+    <%= @host.titulo %>
+  </p>
 
-<%= link_to 'Edit', edit_host_path(@host) %> |
-<%= link_to 'Back', hosts_path %>
+  <p>
+    <strong>Links:</strong>
+    <%= @host.links %>
+  </p>
+
+  <p><strong>Ativo:</strong>
+  <% if @host.ativo %>
+        ✅ <!-- É um emoji de ok -->
+  <% else %>
+        ❌ <!-- É um emoji de negativo -->
+  <% end %>
+  </p>
+  <p>
+    <strong>Imagem padrão:</strong>
+    <img src="<%= @host.imagem_padrao %>" class="img-exibicao">
+  </p>
+
+
+  <div class="actions">
+  <%= link_to 'Salvar', edit_host_path(@host), class: 'btn btn-primary' %>
+  <%= link_to 'Cancelar', hosts_path, class: 'btn btn-danger' %>
+  </div>
+</div>
