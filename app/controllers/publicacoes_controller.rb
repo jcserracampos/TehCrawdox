@@ -4,7 +4,11 @@ class PublicacoesController < ApplicationController
   # GET /publicacoes
   # GET /publicacoes.json
   def index
-    @publicacoes = Publicacao.where('situacao = 1')
+    @publicacoes = Publicacao.includes(:imagens).includes(links: :host).where(situacao: 1)
+
+    # @imagens = Imagem.where(publicacao: @publicacoes)
+    # @links = Link.where(publicacao: @publicacoes)
+    # @hosts = Host.all
   end
 
   # GET /publicacoes/1
@@ -69,7 +73,7 @@ class PublicacoesController < ApplicationController
   def confirmar
     @publicacao = Publicacao.find(params[:id])
     @publicacao.situacao = Publicacao::CONFIRMADA
-    @publicacao.host = params[:host]
+    @publicacao.host_id = params[:host_id]
     @publicacao.save
 
     redirect_to action: "index"
@@ -109,6 +113,6 @@ class PublicacoesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def publicacao_params
-      params.require(:publicacao).permit(:titulo, :descricao, :codigo, :url, :link_imagem, :caminho_imagem, :situacao, :exportado, :categoria_id, :host)
+      params.require(:publicacao).permit(:titulo, :descricao, :codigo, :url, :situacao, :exportado, :categoria_id, :host_id)
     end
 end

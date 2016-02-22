@@ -1,6 +1,9 @@
 class Publicacao < ActiveRecord::Base
   belongs_to :categoria
 
+  has_many :imagens
+  has_many :links
+
   CRIADA = 0
   NOVA = 1
   CONFIRMADA = 2

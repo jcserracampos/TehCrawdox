@@ -1,8 +1,10 @@
-<%= render 'layouts/navbar' %>
-
 <div class="container-fluid">
-  <p id="notice"><%= notice %></p>
 
+  <% if notice %>
+      <div class="alert alert-info">
+        <p id="notice"><%= notice %></p>
+      </div>
+  <% end %>
   <p>
     <strong>Nome:</strong>
     <%= @host.titulo %>
@@ -14,11 +16,11 @@
   </p>
 
   <p><strong>Ativo:</strong>
-  <% if @host.ativo %>
+    <% if @host.ativo %>
         ✅ <!-- É um emoji de ok -->
-  <% else %>
+    <% else %>
         ❌ <!-- É um emoji de negativo -->
-  <% end %>
+    <% end %>
   </p>
   <p>
     <strong>Imagem padrão:</strong>
@@ -27,7 +29,7 @@
 
 
   <div class="actions">
-  <%= link_to 'Salvar', edit_host_path(@host), class: 'btn btn-primary' %>
-  <%= link_to 'Cancelar', hosts_path, class: 'btn btn-danger' %>
+    <%= link_to 'Salvar', edit_host_path(@host), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', hosts_path, class: 'btn btn-danger' %>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <body ng-controller="ControllerPublicacoes">
-
-<%= render "layouts/navbar" %>
-
+<script>
+  var Publicacoes = <%= @publicacoes.to_json(include: [:links, :imagens]) %>
+</script>
 <div class="container-fluid">
   <div class="row">
     <div class="main">
@@ -13,9 +13,9 @@
         <% else %>
             <% @publicacoes.each do |publicacao| %>
                 <div class="col-xs-6 col-sm-3 placeholder">
-                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="img-responsive" alt="Generic placeholder thumbnail" height="200" width="200">
+                  <img src="<%= publicacao.imagens[0].imagem %>" class="img-responsive" alt="Generic placeholder thumbnail" height="200" width="200">
                   <h4><%= publicacao.titulo %></h4>
-                  <span class="text-muted"><%= publicacao.descricao.to_s[235...535] %>></span>
+                  <span class="text-muted"><%= publicacao.descricao %>></span>
                 </div>
 
             <% end %>
@@ -34,9 +34,7 @@
               <tr>
                 <th>Categoria</th>
                 <th>Novas</th>
-                <th>Confirmadas</th>
                 <th>Ignoradas</th>
-                <th>Rejeitadas</th>
               </tr>
               </thead>
               <tbody>
@@ -44,9 +42,7 @@
                   <tr>
                     <td><%= categoria.nome %></td>
                     <td><%= categoria.publicacaos.where('situacao = 0').length %></td>
-                    <td><%= categoria.publicacaos.where('situacao = 1').length %></td>
                     <td><%= categoria.publicacaos.where('situacao = 2').length %></td>
-                    <td><%= categoria.publicacaos.where('situacao = 3').length %></td>
                   </tr>
               <% end %>
               </tbody>

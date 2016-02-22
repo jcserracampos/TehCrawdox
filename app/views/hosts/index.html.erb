@@ -7,17 +7,17 @@
   <table class="table table-hover">
     <thead>
     <tr>
-      <th>Links</th>
+      <th>Nome</th>
       <th>Imagem padrão</th>
       <th>Ativo</th>
-      <th colspan="3"></th>
+      <th colspan="3">Ações</th>
     </tr>
     </thead>
 
     <tbody>
     <% @hosts.each do |host| %>
         <tr>
-          <td><%= host.links %></td>
+          <td><%= host.titulo %></td>
           <td><img src="<%= host.imagem_padrao %>" class="img-logo"></td>
           <td>  <% if host.ativo %>
                 ✅ <!-- É um emoji de ok -->

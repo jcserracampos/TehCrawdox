@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html ng-app="tehparadox">
 <head>
-  <title>Tehparadox</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title>Teh Crawdox</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
   <script>
     var Publicacoes = <%= @publicacoes.to_json.html_safe %>;
-    </script>
+  </script>
 </head>
-<body >
 
-<%= yield %>
+<body>
+<div class="container-fluid">
+  <%= render 'layouts/navbar' %>
 
+  <%= yield %>
+</div>
 </body>
 </html>

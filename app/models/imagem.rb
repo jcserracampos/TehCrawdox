@@ -1,3 +1,3 @@
 class Imagem < ActiveRecord::Base
-  belongs_to :post
+  belongs_to :publicacao
 end

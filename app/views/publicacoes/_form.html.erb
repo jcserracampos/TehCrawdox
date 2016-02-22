@@ -1,53 +1,45 @@
 <%= form_for(@publicacao) do |f| %>
-  <% if @publicacao.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@publicacao.errors.count, "error") %> prohibited this publicacao from being saved:</h2>
+    <% if @publicacao.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@publicacao.errors.count, "error") %> prohibited this publicacao from being saved:</h2>
 
-      <ul>
-      <% @publicacao.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @publicacao.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :titulo %><br>
+      <%= f.text_field :titulo %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :titulo %><br>
-    <%= f.text_field :titulo %>
-  </div>
-  <div class="field">
-    <%= f.label :descricacao %><br>
-    <%= f.text_area :descricacao %>
-  </div>
-  <div class="field">
-    <%= f.label :codigo %><br>
-    <%= f.number_field :codigo %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :link_imagem %><br>
-    <%= f.text_field :link_imagem %>
-  </div>
-  <div class="field">
-    <%= f.label :caminho_imagem %><br>
-    <%= f.text_field :caminho_imagem %>
-  </div>
-  <div class="field">
-    <%= f.label :situacao %><br>
-    <%= f.number_field :situacao %>
-  </div>
-  <div class="field">
-    <%= f.label :exportado %><br>
-    <%= f.check_box :exportado %>
-  </div>
-  <div class="field">
-    <%= f.label :categoria_id %><br>
-    <%= f.text_field :categoria_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :descricao %><br>
+      <%= f.text_area :descricao %>
+    </div>
+    <div class="field">
+      <%= f.label :codigo %><br>
+      <%= f.number_field :codigo %>
+    </div>
+    <div class="field">
+      <%= f.label :url %><br>
+      <%= f.text_field :url %>
+    </div>
+    <div class="field">
+      <%= f.label :situacao %><br>
+      <%= f.number_field :situacao %>
+    </div>
+    <div class="field">
+      <%= f.label :exportado %><br>
+      <%= f.check_box :exportado %>
+    </div>
+    <div class="field">
+      <%= f.label :categoria_id %><br>
+      <%= f.text_field :categoria_id %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>
