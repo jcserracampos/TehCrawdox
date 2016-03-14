@@ -6,6 +6,21 @@ angular.module('tehparadox', [])
     .controller('ControllerPublicacoes', function ($scope) {
         $scope.publicacoes = Publicacoes;
 
+        for (p = 0; p < $scope.publicacoes.length; p++) {
+            $scope.publicacoes[p].googleBooks = [];
+            console.log(p);
+            $scope.url = "https://www.googleapis.com/books/v1/volumes?q=".concat($scope.publicacoes[p].titulo).concat("&maxResults=1");
+            console.log($scope.url);
+            $.get($scope.url, function (data) {
+                scope.$apply(function () {
+                    scope.publicacoes[p].googleBooks = data.items[0];
+                })
+            });
+
+
+            console.log($scope.publicacoes[p]);
+        }
+
         //$scope.url = urlUpdate;
 
 

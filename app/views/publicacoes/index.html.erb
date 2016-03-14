@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-2 publicacoes" ng-repeat="publicacao in publicacoes">
           <h5><strong>{{publicacao.titulo}}</strong></h5>
-          <img src="{{publicacao.imagens[0].imagem}}" class="img-capa">
+          <img ng-src="{{publicacao.imagens[0].imagem}}" class="img-capa">
           <p>{{publicacao.descricao}}</p>
           <p><strong>Hosts:</strong></p>
           <button ng-click="gerarDlc(publicacao, link.host.id)" ng-repeat="link in publicacao.links | unique 'link.host.imagem_padrao'">
