@@ -20,8 +20,10 @@
           <img ng-src="{{publicacao.imagens[0].imagem}}" class="img-capa">
           <p>{{publicacao.descricao}}</p>
           <p><strong>Hosts:</strong></p>
-          <button ng-click="gerarDlc(publicacao, link.host.id)" ng-repeat="link in publicacao.links | unique 'link.host.imagem_padrao'">
-            <img src="{{link.host.imagem_padrao}}" class="img-logo"></button>
+          <button ng-click="gerarDlc(publicacao, link.host.id)" ng-repeat="link in publicacao.links">
+            <img src="{{link.host.imagem_padrao}}" class="img-logo">
+            <p>{{link.host.titulo}}</p>
+          </button>
           <p><strong>Ações:</strong></p>
           <button class="btn .btn-primary" ng-click="confirmarSemHost(publicacao)">Confirmar</button>
           <button class="btn .btn-warning" ng-click="ignorar(publicacao)">Ignorar</button>

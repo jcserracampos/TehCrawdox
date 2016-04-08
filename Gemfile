@@ -57,6 +57,9 @@ gem 'angular-rails-templates'
 # Para o rake
 gem 'rest-client', '~> 1.8.0'
 
+# Gem para o crawler de páginas
+gem 'mechanize'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
