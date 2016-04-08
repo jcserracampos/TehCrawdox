@@ -6,46 +6,6 @@ angular.module('tehparadox', [])
     .controller('ControllerPublicacoes', function ($scope) {
         $scope.publicacoes = Publicacoes;
 
-        for (p = 0; p < $scope.publicacoes.length; p++) {
-            $scope.publicacoes[p].googleBooks = [];
-            console.log(p);
-            $scope.url = "https://www.googleapis.com/books/v1/volumes?q=".concat($scope.publicacoes[p].titulo).concat("&maxResults=1");
-            console.log($scope.url);
-            $.get($scope.url, function (data) {
-                scope.$apply(function () {
-                    scope.publicacoes[p].googleBooks = data.items[0];
-                })
-            });
-
-
-            console.log($scope.publicacoes[p]);
-        }
-
-        //$scope.url = urlUpdate;
-
-
-        // Retorna o id da Imagem da Publicação
-        //$scope.idImagem = function (publicacao) {
-        //    for (i = 0; $scope.imagens.length > i; i++) {
-        //        if ($scope.imagens[i].publicacao_id === publicacao.id) {
-        //            return i;
-        //            break;
-        //        }
-        //    }
-        //};
-        //
-        //
-        //for (k = 0; $scope.publicacoes.length > k; k++) {
-        //    $scope.publicacoes[k].links = [];
-        //
-        //    for (j = 0; $scope.links.length > j; j++) {
-        //        if ($scope.links[j].publicacao_id === $scope.publicacoes[k].id) {
-        //            $scope.publicacoes[k].links.push($scope.links[j])
-        //        }
-        //    }
-        //}
-
-
         // Gerar o dlc por ajax ou javascript
         $scope.gerarDlc = function (publicacao, host) {
             $scope.url = window.location.host;
@@ -72,6 +32,5 @@ angular.module('tehparadox', [])
             $scope.url = "http://".concat($scope.url).concat("/publicacoes/").concat(publicacao.id).concat("/rejeitar");
             window.location.href = $scope.url;
         };
-
 
     });

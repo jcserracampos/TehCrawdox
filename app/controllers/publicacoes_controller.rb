@@ -5,10 +5,6 @@ class PublicacoesController < ApplicationController
   # GET /publicacoes.json
   def index
     @publicacoes = Publicacao.includes(:imagens).includes(links: :host).where(situacao: 1)
-
-    # @imagens = Imagem.where(publicacao: @publicacoes)
-    # @links = Link.where(publicacao: @publicacoes)
-    # @hosts = Host.all
   end
 
   # GET /publicacoes/1
@@ -106,13 +102,14 @@ class PublicacoesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_publicacao
-      @publicacao = Publicacao.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_publicacao
+    @publicacao = Publicacao.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def publicacao_params
-      params.require(:publicacao).permit(:titulo, :descricao, :codigo, :url, :situacao, :exportado, :categoria_id, :host_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def publicacao_params
+    params.require(:publicacao).permit(:titulo, :descricao, :codigo, :url, :situacao, :exportado, :categoria_id, :host_id, :conteudo_html, :conteudo,
+                                       imagens_attributes: [:id, :imagem])
+  end
 end

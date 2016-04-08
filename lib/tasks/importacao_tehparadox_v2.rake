@@ -6,11 +6,11 @@ require 'rubygems'
 require 'mechanize'
 
 
-
-MAX_PAGINAS_INDICE = 20
+unless MAX_PAGINAS_INDICE # Para evitar warning de variável já iniciada
+  MAX_PAGINAS_INDICE = 20
+end
 
 namespace :importacao do
-
 
 
   @links=[]
