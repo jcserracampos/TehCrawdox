@@ -8,10 +8,26 @@ namespace :mechanize do
     puts 'Processando'
     ebooks = AGENTE.get('http://avxhome.in/ebooks')
     links = []
-    Nokogiri::HTML(open('http://avxhome.in/ebooks')).to_s.scan(/\/ebooks\/[a-zA-Z0-9]+\.html/).each do |link|
+    Nokogiri::HTML(open('http://avxhome.in/ebooks/pages/2')).to_s.scan(/\/ebooks\/[a-zA-Z0-9]+\.html/).each do |link|
       link = 'http://avxhome.in'+link
       links << link
     end
+
+    Nokogiri::HTML(open('http://avxhome.in/ebooks/pages/3')).to_s.scan(/\/ebooks\/[a-zA-Z0-9]+\.html/).each do |link|
+      link = 'http://avxhome.in'+link
+      links << link
+    end
+
+    Nokogiri::HTML(open('http://avxhome.in/ebooks/pages/4')).to_s.scan(/\/ebooks\/[a-zA-Z0-9]+\.html/).each do |link|
+      link = 'http://avxhome.in'+link
+      links << link
+    end
+
+    Nokogiri::HTML(open('http://avxhome.in/ebooks/pages/5')).to_s.scan(/\/ebooks\/[a-zA-Z0-9]+\.html/).each do |link|
+      link = 'http://avxhome.in'+link
+      links << link
+    end
+
     puts 'Adicionando '+links.length.to_s+' publicações'
     links.each do |publicacao|
       begin
