@@ -17,30 +17,42 @@ Sistema para varredura de páginas, fóruns entre outros para procura de livros 
 
 2 - Ao clonar esse projeto para a pasta dos seus sistemas, vá para dentro da pasta do projeto e digite:
 
+<code>
 		bundle install
-		
+</code>	
+
 3 - Ainda no root da pasta do projeto, digite:
 
+<code>
 		bower install
-		
+</code>	
+
 4 - Depois, digite:
 
+<code>
 		rake db:create
-	
+</code>	
+
 5 - Se o banco de dados for criado com sucesso, digite:
 
+<code>
 		rake db:migrate
+</code>
 
 6 - E depois:
 
+<code>
 rake db:seed
+</code>
 
 Se todos os passos forem executados com sucesso, o sistema está pronto para uso.
 
-### Teh Paradox
-Para utilizar o sistema com o Teh Pàradox é necessário ter um usuário e senha.
-Insira os dados do login no método `logar_tehparadox`.
-Na primeira utilização é necessário rodar a tarefa `buscar_categorias`.
-Depois rode a tarefa `capturar_publicações` ou configure no seu crontab
+=== Teh Paradox
+Para utilizar o sistema com o Teh Paradox é necessário ter um usuário e senha.
+Insira os dados do login no método <code>logar_tehparadox</code>.
+
+Na primeira utilização é necessário rodar a tarefa <code>buscar_categorias</code>.
+
+Depois rode a tarefa <code>capturar_publicações</code> ou configure no seu crontab
 
 
