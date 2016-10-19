@@ -19,8 +19,8 @@ namespace :mechanize do
     puts 'Logando'
     cpturbo = AGENTE.get('http://www.cpturbo.org/')
     formulario = cpturbo.form()
-    formulario.ips_username = 'zapattavilla'
-    formulario.ips_password = 'Embraceurdreams1'
+    formulario.ips_username = 'USUARIO'
+    formulario.ips_password = 'SENHA'
     cpturbo = AGENTE.submit(formulario, formulario.buttons.first)
     puts 'Usuário logado'
   end

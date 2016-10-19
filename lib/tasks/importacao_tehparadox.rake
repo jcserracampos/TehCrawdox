@@ -1,192 +1,174 @@
-require 'uri'
-require 'rest_client'
-require "rexml/document"
-require 'json'
+require 'rubygems'
+require 'nokogiri'
+require 'open-uri'
+require 'mechanize'
+require 'colorize'
+
+AGENTE = Mechanize.new do |a|
+  a.follow_meta_refresh = true
+  a.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE # Para evitar problemar com SSL
+  # Mechanize deixa as conexões abertas e confia com coletor de lixo para limpá-las
+  # Depois de um certo ponto, existem tantas conexões abertas que nenhuma conexão de saída pode ser estabelecida
+  # Fazer: Fechar as conexões depois de usá-las
+end
 
 
-MAX_PAGINAS_INDICE = 1
+namespace :tehparadox do
 
-namespace :importacao do
+  desc 'Procura todas as publicações em categorias ativas do TehParadox'
+  task capturar_publicacoes: :environment do
+    beginning_time = Time.now
+    logar_tehparadox
+    buscar_publicacoes
+    processar_publicacao
+    ending_time = Time.now
+    puts ending_time - beginning_time
+  end
 
-  @user_id = '783a3533-7bd8-4c38-9d8f-e9c75d99894d'
-  @api_key = '783a35337bd84c389d8fe9c75d99894d6932385ee7274630f681ad85428953fbe3c375c288c395051a4f888ea764590330ecb10f15a3c2097060c5e08d444f524413a61e1cf6b5dec6f974a26d20e29b'
-  @id_api_listagem = "6bc6401e-6a79-43ba-aa27-d545d91cf02e"
-  @id_api_detalhes = "50b2c084-0823-4e5a-bc2d-0c08c0bbe80c"
+  desc 'Procura todas as categorias do TehParadox'
+  task capturar_categorias: :environment do
+    logar_tehparadox
+    buscar_categorias
+  end
 
-  @parametros = {
-      :username => "adrianocortes",
-      :password => "@alego123"
-  }
-  @cook = ''
-
-  @pagina_base = 'http://tehparadox.com/forum/f58/'
-
-  @links=[]
-
-  task :importio => :environment do
-
-
-    @categoria = Categoria.find_by_nome( "eBooks")
-
-
-    if logar_forum( @pagina_base )
-      ## Buscando pagina inicial
-      puts "Buscando Pagina 01"
-      buscar_links(@pagina_base)
-      puts "Registrando #{("%04d" % @links.size)} Itens"
-      registra_items_bd(@links)
-      @links = []
-
-      (2..MAX_PAGINAS_INDICE).each do |numero|
-        puts "Buscando Pagina #{("%02d" % numero)}"
-        buscar_links("#{@pagina_base}index#{numero}.html")
-        puts "Registrando #{("%04d" % @links.size)} Itens"
-        registra_items_bd(@links)
-        @links = []
-
-      end
-
-
-      items_pendentes = Publicacao.where( situacao: Publicacao::CRIADA )
-      qtd = 0
-      items_pendentes.each do |publicacao|
-        busca_destalhes( publicacao )
-        qtd += 1
-
-        puts "Items: #{qtd}" if qtd % 10 == 0
-      end
-
-
-      puts "##########################################"
-      puts "Importação de Lista realizado com Sucesso"
-
+  def logar_tehparadox
+    puts 'Logando'
+    begin
+      pagina = AGENTE.get('http://www.tehparadox.com')
+    rescue Mechanize::ResponseCodeError
+      puts 'Site indisponível /nTarefa cancelada'.red
+      exit!
+    else
+      formulario = pagina.form
+      # TODO: Criar um usuário para não utilizar o meu /JC
+      # Preenche o formulário de login
+      formulario.vb_login_username = 'USUARIO'
+      formulario.vb_login_password = 'SENHA'
+      # Submete o formulário de login
+      pagina = AGENTE.submit(formulario, formulario.buttons.first)
+      # Se o follow_meta não funcionar, redireciono para a página inicial de novo manualmente
+      pagina = AGENTE.get('http://www.tehparadox.com')
+      puts 'Usuário logado'.green
     end
   end
 
-
-  def logar_forum( pagina )
-
-    puts "Logando"
-    ##Chamando query para logar no site destino
-    response = RestClient.post( "https://api.import.io/store/connector/#{@id_api_listagem}/_login?input/webpage/url=#{pagina}&_user=#{@user_id}&_apikey=#{@api_key}", @parametros.to_json, :content_type => :json, :accept => :json )
-
-    unless response.code
-      puts "Erro ao logar no Site"
-      return false
+  def buscar_categorias
+    regex = Regexp.new('(http:\/\/tehparadox.com\/forum\/f[0-9]{1,2})')
+    # Acessa a página que contém todas as categorias
+    categorias_pagina = AGENTE.get('http://www.tehparadox.com/forum')
+    categorias = []
+    # Percorre todos os links do fórum atrás de categorias
+    categorias_pagina.links.each do |link|
+      categorias << regex.match(link.uri.to_s).to_s if regex.match(link.uri.to_s)
     end
 
-    jsao = JSON.parse( response.body )
+    categorias.each do |categoria_auxiliar|
+      categoria_pagina = AGENTE.get(categoria_auxiliar)
+      categoria = Categoria.new
+      categoria.nome = categoria_pagina.title
+      puts 'Categoria localizada '+categoria.nome
 
-    @cook = {"cookies":jsao["cookies"]}
+      # TODO Capturar a descrição.
+      categoria.ativo = false
+      categoria.url = categoria_pagina.uri.to_s
+      categoria.site_id = Site.where(nome: 'TehParadox').first.id
+      # FAZER capturar o nome até o hífen
+      categoria.path = /\w+/.match(categoria.nome).to_s
 
-    return true
-
+      unless Categoria.where(nome: categoria.nome).exists?
+        puts 'Categoria adicionada '+categoria.nome.green
+        categoria.save
+      end
+    end
   end
 
-  def buscar_links( pagina )
-    ##Funcao que busca uma pagina com os links dos posts
-    ## Parametro: pagina - Se nil, busca pagina inicial do forum
+  def buscar_publicacoes
+    last_encontrados = 0
+    # Buscar apenas nas categorias consideradas ativas
+    categorias = Categoria.where(site_id: 2, ativo: true)
 
+    categorias.each do |categoria|
+      categoria_pagina = AGENTE.get(categoria.url)
+      categoria_pagina.links.each do |link|
+        text = link.text.strip
+        href = link.href
+        atributos = link.attributes
 
-    post = @cook
-    post["input"] = {"webpage/url" => "#{pagina}"}
-    caminho_completo = "https://api.import.io/store/connector/#{@id_api_listagem}/_query?&_user=#{@user_id}&_apikey=#{@api_key}"
-    response = RestClient.post( caminho_completo, post.to_json, {:content_type => :json, :accept => :json } )
-
-
-    items = JSON.parse( response.body )
-    items = items["results"]
-
-
-    items.each{|item| @links << item}
-
-    registra_items_bd( @links )
-    @links = []
-  end
-
-  def busca_destalhes( publicacao )
-
-    contador = 0
-    resultado = false
-
-    while resultado == false and contador < 2
-      begin
-        logar_forum( @pagina_base ) if @cook.nil?
-        post = @cook
-        post["input"] = {"webpage/url" => "#{publicacao.url}"}
-        caminho_completo = "https://api.import.io/store/connector/#{@id_api_detalhes}/_query?&_user=#{@user_id}&_apikey=#{@api_key}"
-        response = RestClient.post( caminho_completo, post.to_json, {:content_type => :json, :accept => :json } )
-
-        items_json = JSON.parse( response.body )
-        items = items_json["results"]
-        if items[0].size != 3
-          raise 'Resultado vazio'
+        next unless text.length > 0 ## Ignora imagens ( texto vem vazio)
+        next unless href.include?(categoria[:url]) ## Ignora aqueles que não são links para a propria categoria
+        next if href[-4, 4] == 'new/' ## Ignora links para "Primeiro post não lido", caso contrario fica repedito
+        next if text.to_i > 0 ## Pula paginacao numeros
+        if text == 'Last Page'
+          if last_encontrados > 0
+            break
+          end
+          last_encontrados += 1
+          next
         end
+        next if ['Last', '<', '>', 'Forum Tools', 'Forum Tools', 'Forum Tools', 'Thread', 'Thread Starter', 'Last »', '« First', 'Last Post', 'Reverse Sort Order', 'Replies',
+                 'Search this Forum', 'Rating', 'Views', 'Open Contacts Popup', 'Top', 'Mark This Forum Read'].include?(text)
 
+        @links << {texto: text, href: href, atributos: atributos, categoria: categoria}
 
+      end
+    end
+  end
 
-        publicacao.link_imagem = items[0]["image_post"] unless items[0]["image_post"].size > 1
-        publicacao.titulo = items[0]["title_post"]
-        publicacao.descricao = items[0]["conteudo_post"]
-        publicacao.situacao = Publicacao::NOVA
-        publicacao.categoria = @categoria
-
-        if publicacao.save
-          unless publicacao.link_imagem.nil?
-            publicacao.caminho_imagem = "#{@categoria.pasta_imagens}/#{ "%09d" % publicacao.id }#{File.extname(publicacao.link_imagem)}"
-            IO.copy_stream(open( publicacao.link_imagem ), publicacao.caminho_imagem )
-            publicacao.save
+  def processar_publicacao
+    puts 'Processando publicações'
+    @links.each do |pub|
+      unless Publicacao.where(titulo: pub[:texto]).exists?
+        publicacao = Publicacao.new
+        publicacao.titulo= pub[:texto].force_encoding('iso-8859-1').encode('utf-8')
+        puts 'Publicação capturada '+publicacao.titulo
+        unless publicacao.titulo === 'Ebook 101-How to\'s and tips'
+          publicacao.codigo = pub[:atributos][:id]
+          publicacao.url = pub[:href]
+          # Captura o HTML da publicação
+          publicacao.conteudo_html = AGENTE.get(publicacao.url).parser.css('.post').to_s.force_encoding('iso-8859-1').encode('utf-8')
+          publicacao.conteudo = publicacao.conteudo_html.gsub(/<[^>]+>/, '')
+          publicacao.descricao = publicacao.conteudo.slice(0...publicacao.conteudo.index('Code'))
+          publicacao.situacao = '1'
+          publicacao.exportado = false
+          # Varre todos os links de uma tag img com a class padrão do TehParadox
+          Nokogiri::HTML(publicacao.conteudo_html).css('.tcattdimgresizer').to_s.scan(/[a-z]{3,5}:\/\/[^\s"<\\']*/).each do |imagem|
+            img = Imagem.new
+            img.url = imagem
+            publicacao.imagens << img
+          end
+          publicacao.categoria_id = pub[:categoria][:id]
+          # Varre todos os links dentro de um campo code (.alt2)
+          Nokogiri::HTML(publicacao.conteudo_html).css('.alt2').to_s.scan(/[a-z]{3,5}:\/\/[^\s"<\\']*/).each do |link|
+            l = Link.new
+            l.link = link
+            if Host.where(url: /[a-z]{3,5}:\/\/[a-zA-Z0-9.]+/.match(link).to_s).exists?
+              host = Host.where(url: /[a-z]{3,5}:\/\/[a-zA-Z0-9.]+/.match(link).to_s).first
+              l.host_id = host.id
+            else
+              agent = Mechanize.new
+              host = Host.new
+              host.url = /[a-z]{3,5}:\/\/[a-zA-Z0-9.]+/.match(link).to_s
+              begin
+                pagina = agent.get(host.url)
+              rescue Mechanize::ResponseCodeError
+                puts 'Host indisponível!!!'.red
+              rescue SocketError
+                puts 'Host indisponível!!!'.red
+              else
+                host.imagem_padrao = pagina.images[0]
+                host.titulo = pagina.title.to_s
+                host.ativo = false
+                host.save
+                l.host_id = Host.last.id
+              end
+            end
+            publicacao.links << l
+          end
+          if publicacao.save
+            puts 'Publicação salva '+publicacao.titulo.green
           end
         end
-
-
-
-        resultado = true
-      rescue Exception => e
-        contador += 1
-        resultado = false
-        @cook = nil
-        puts "************************************ #{( "%04d" % contador)}"
-        puts "Erro: #{e.message}"
       end
     end
-
   end
-
-
-  def registra_items_bd( links )
-
-    links.each do |link|
-
-      codigo = 0
-      url_texto = ""
-
-      if link['link_post'].class == Array
-        url_texto = link['link_post'][0]
-      else
-        url_texto = link['link_post']
-      end
-
-
-      if url_texto.split('/').last.split("-").last == 'new'
-        codigo = url_texto.split('/').last.split("-").last.to_i
-      else
-        codigo = url_texto.split('/').last.split("-")[-1]
-      end
-
-      publicacoes = Publicacao.where( codigo: codigo )
-      if publicacoes.size == 0
-        publicacao = Publicacao.new
-        publicacao.titulo = link['title_post']
-        publicacao.url = url_texto
-        publicacao.codigo = codigo
-        publicacao.situacao = Publicacao::CRIADA
-        publicacao.save
-      end
-    end
-
-
-  end
-
-
 end

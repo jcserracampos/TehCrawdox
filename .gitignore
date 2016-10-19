@@ -20,3 +20,6 @@
 
 # Ignorar os arquivos de configuração da IDE
 .idea
+
+# Ignore bower components
+/vendor/assets/bower_components
