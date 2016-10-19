@@ -5,8 +5,42 @@ Sistema para varredura de páginas, fóruns entre outros para procura de livros 
 
 == Definições:
 
-* Versão do <b>Ruby</b>: 2.3.0
+* Versão do <b>Ruby</b>: 2.3.1
 
 * Versão do <b>Rails</b>: 4.2.5
 
 * Nome do <b>gemset</b>: tehcrawdox
+
+== Passos para execução
+
+1 - Esse sistema utiliza o postgres. Assegure-se de que tenha ele instalado e configurado no seu servidor.
+
+2 - Ao clonar esse projeto para a pasta dos seus sistemas, vá para dentro da pasta do projeto e digite:
+
+		bundle install
+		
+3 - Ainda no root da pasta do projeto, digite:
+
+		bower install
+		
+4 - Depois, digite:
+
+		rake db:create
+	
+5 - Se o banco de dados for criado com sucesso, digite:
+
+		rake db:migrate
+
+6 - E depois:
+
+rake db:seed
+
+Se todos os passos forem executados com sucesso, o sistema está pronto para uso.
+
+### Teh Paradox
+Para utilizar o sistema com o Teh Pàradox é necessário ter um usuário e senha.
+Insira os dados do login no método `logar_tehparadox`.
+Na primeira utilização é necessário rodar a tarefa `buscar_categorias`.
+Depois rode a tarefa `capturar_publicações` ou configure no seu crontab
+
+
